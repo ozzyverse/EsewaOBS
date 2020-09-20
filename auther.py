@@ -1,6 +1,8 @@
 import requests
 import configparser
+from datetime import date 
 import os
+today = date.today() 
 Ua= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0'
 config = configparser.ConfigParser()
 path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
@@ -26,7 +28,7 @@ def get_session():
 
 
 def get_most_recent_transaction():
-    url= 'https://esewa.com.np/api/web/auth/transactions?channel=ALL&from_date=2020-09-09&page=0&product_id=1&prop_value=&size=15&status=COMPLETE&to_date=2020-09-16&type=CR'
+    url= f'https://esewa.com.np/api/web/auth/transactions?channel=ALL&from_date=2020-09-09&page=0&product_id=1&prop_value=&size=15&status=COMPLETE&to_date={today}&type=CR'
     datas = get_session()
     headers = {'User-Agent':Ua,
     'X-XSRF-TOKEN-ES':datas['X-XSRF-TOKEN-ES']}
