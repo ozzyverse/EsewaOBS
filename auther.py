@@ -2,6 +2,7 @@ import requests
 import configparser
 from datetime import date 
 import os
+import base64 
 today = date.today() 
 Ua= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0'
 config = configparser.ConfigParser()
@@ -9,6 +10,14 @@ path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
 config.read(os.path.join(path, 'config.conf'))
 email = config['config']['email']
 password = config['config']['password']
+def get_encoded_pass(string):
+    sample_string = string
+    sample_string_bytes = sample_string.encode("ascii") 
+    
+    base64_bytes = base64.b64encode(sample_string_bytes) 
+    base64_string = base64_bytes.decode("ascii") 
+    return base64_string
+password = get_encoded_pass(password)
 def get_session():
     url = 'https://esewa.com.np/authenticate?redirectForm='
     headers = {'User-Agent':Ua,
